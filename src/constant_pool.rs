@@ -1129,7 +1129,7 @@ impl<'a> ConstantPoolIter<'a> {
 }
 
 impl<'a> Iterator for ConstantPoolIter<'a> {
-    type Item = ConstantPoolItem<'a>;
+    type Item = (usize, ConstantPoolItem<'a>);
 
     fn next(&mut self) -> Option<Self::Item> {
         while self.index + 1 < self.constant_pool.len() {
@@ -1191,7 +1191,7 @@ impl<'a> Iterator for ConstantPoolIter<'a> {
                 ConstantPoolEntry::PackageInfo(x) => ConstantPoolItem::PackageInfo(peel!(x).utf8()),
                 ConstantPoolEntry::Unused => continue,
             };
-            return Some(item);
+            return Some((self.index, item));
         }
         None
     }

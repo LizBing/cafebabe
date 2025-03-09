@@ -29,23 +29,23 @@ fn iterator_basic() {
     //  #91 = Utf8               Object.java
 
     assert!(match iter.next() {
-        Some(ConstantPoolItem::ClassInfo(x)) => x == "java/lang/StringBuilder",
+        Some((_i, ConstantPoolItem::ClassInfo(x))) => x == "java/lang/StringBuilder",
         _ => false,
     });
     assert!(match iter.next() {
-        Some(ConstantPoolItem::MethodRef(MemberRef {
+        Some((_i, ConstantPoolItem::MethodRef(MemberRef {
             class_name: x,
             name_and_type:
                 NameAndType {
                     name: y,
                     descriptor: z,
                 },
-        })) => x == "java/lang/StringBuilder" && y == "<init>" && z == "()V",
+        }))) => x == "java/lang/StringBuilder" && y == "<init>" && z == "()V",
         _ => false,
     });
     let mut iter = iter.skip(29);
     assert!(match iter.next() {
-        Some(ConstantPoolItem::ClassInfo(x)) => x == "java/lang/Throwable",
+        Some((_i, ConstantPoolItem::ClassInfo(x))) => x == "java/lang/Throwable",
         _ => false,
     });
     assert!(iter.next().is_none());
